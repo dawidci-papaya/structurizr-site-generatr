@@ -1,0 +1,5 @@
+FROM ghcr.io/avisi-cloud/structurizr-site-generatr
+
+USER root
+VOLUME /github/workspace /var/model
+WORKDIR /var/model

@@ -1,0 +1,37 @@
+name: 'Build Repo Site'
+description: >
+  Structurizr static site generator.
+  Outputs to: `build/site`
+inputs:
+  repository:
+    description: 'Repository name with owner. For example, actions/checkout'
+    default: ${{ github.repositoryUrl }}
+  workspace-file:
+    description: Relative path within the Git repository of the workspace file (always required)
+    required: true
+  default-branch:
+    description: The default branch
+    required: true
+  branches:
+    description: Comma-separated list of branches to include in the generated site
+    required: true
+  token:
+    description: Personal access token (PAT) used to fetch the repository.
+    default: ${{ github.token }}
+runs:
+  using: 'docker'
+  image: 'Dockerfile.action'
+  args:
+    - generate-site
+    - --git-username
+    - ${{ inputs.token }}
+    - --git-password
+    - ""
+    - --git-url
+    - ${{ inputs.repository }}
+    - --workspace-file
+    - ${{ inputs.workspace-file }}
+    - --branches
+    - ${{ inputs.branches }}
+    - --default-branch
+    - ${{ inputs.default-branch }}
